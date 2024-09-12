@@ -1,5 +1,5 @@
-#ifndef BIBLI_H      // Proteção contra múltiplas inclusões do mesmo arquivo de cabeçalho
-#define BIBLI_H
+#ifndef LIBRARY_H      // Proteção contra múltiplas inclusões do mesmo arquivo de cabeçalho
+#define LIBRARY_H
 
 #include <string>     // Inclui a biblioteca para usar a classe std::string
 #include <vector>     // Inclui a biblioteca para usar a classe std::vector (vetor dinâmico)
@@ -10,22 +10,28 @@
 class Library
 {
 private:
-    // Atributos privados
-    // std::vector<Book> cria um vetor de objetos da classe Book
-    std::vector<Book> livros;   // Vetor dinâmico para armazenar uma coleção de livros
-
-    // std::vector<User> cria um vetor de objetos da classe User
-    std::vector<User> usuarios; // Vetor dinâmico para armazenar uma coleção de usuários
+    std::vector<Book> books;   // Vetor dinâmico para armazenar uma coleção de livros
+    std::vector<User> users;   // Vetor dinâmico para armazenar uma coleção de usuários
 
 public:
     // Função pública para adicionar um novo livro à coleção da biblioteca
-    // O parâmetro é passado por referência constante (&) para evitar cópias desnecessárias
-    void adicionarLivro(const Book& livro);
+    void addBook(const Book& book);
 
     // Função pública para adicionar um novo usuário à coleção da biblioteca
-    void adicionarUsuario(const User& usuario);
+    void addUser(const User& user);
 
-    // Você pode adicionar mais métodos, como para buscar, remover ou listar livros e usuários.
+    // Função pública para emprestar um livro a um usuário
+    bool borrowBook(const std::string& isbn, const std::string& userId);
+
+    // Função pública para devolver um livro
+    bool returnBook(const std::string& isbn, const std::string& userId);
+
+private:
+    // Função privada para encontrar um livro pelo ISBN
+    Book* findBookByIsbn(const std::string& isbn);
+
+    // Função privada para encontrar um usuário pelo ID
+    User* findUserById(const std::string& userId);
 };
 
 #endif  // Fim da proteção contra múltiplas inclusões

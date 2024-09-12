@@ -1,4 +1,6 @@
 #include "User.h"
+#include "Book.h"
+#include <algorithm>  // Para std::find
 
 User::User(std::string name, std::string id) : name(name), id(id) {}
 
@@ -13,7 +15,11 @@ void User::borrowBook(Book& book) {
 }
 
 void User::returnBook(Book& book) {
-    // Código para devolver livro
+    auto it = std::find(borrowedBooks.begin(), borrowedBooks.end(), book);
+    if (it != borrowedBooks.end()) {
+        borrowedBooks.erase(it);
+        book.returnBook();
+    }
 }
 
 std::vector<Book> User::getBorrowedBooks() const { return borrowedBooks; }

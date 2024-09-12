@@ -1,28 +1,28 @@
-#ifndef LIVRO_H
-#define LIVRO_H
+#ifndef BOOK_H
+#define BOOK_H
 
 #include <string>
 
-class Livro {
+class Book {
 private:
-    std::string titulo;
-    std::string autor;
-    std::string ISBN;
-    bool disponivel;
+    std::string title;
+    std::string author;
+    std::string isbn;
+    bool isAvailable;
 
 public:
     // Construtor
-    Livro(std::string titulo, std::string autor, std::string ISBN);
+    Book(std::string title, std::string author, std::string isbn);
 
     // Métodos getters
-    std::string getTitulo();
-    std::string getAutor();
-    std::string getISBN();
-    bool isDisponivel();
+    std::string getTitle() const;
+    std::string getAuthor() const;
+    std::string getIsbn() const;
+    bool getAvailability() const;
 
     // Métodos para emprestar e devolver o livro
-    void emprestar();
-    void devolver();
+    void borrowBook();
+    void returnBook();
 };
 
 #endif
