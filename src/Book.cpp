@@ -1,23 +1,11 @@
 #include "Book.h"
 
-// Não é necessário redefinir getTitulo(), getAutor(), e getISBN() aqui, pois já estão implementadas no cabeçalho.
+Book::Book(const std::string& title, const std::string& author, const std::string& isbn)
+    : title(title), author(author), isbn(isbn), isAvailable(true) {}
 
-void Book::emprestar() {
-    if (disponivel) {
-        disponivel = false;
-    } else {
-        std::cerr << "Livro já emprestado!" << std::endl;
-    }
-}
-
-void Book::devolver() {
-    if (!disponivel) {
-        disponivel = true;
-    } else {
-        std::cerr << "Livro já está disponível!" << std::endl;
-    }
-}
-
-bool Book::operator==(const Book& other) const {
-    return ISBN == other.ISBN;
-}
+std::string Book::getTitle() const { return title; }
+std::string Book::getAuthor() const { return author; }
+std::string Book::getIsbn() const { return isbn; }
+bool Book::getAvailability() const { return isAvailable; }
+void Book::borrowBook() { isAvailable = false; }
+void Book::returnBook() { isAvailable = true; }

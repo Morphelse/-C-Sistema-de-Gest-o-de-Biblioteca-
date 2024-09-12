@@ -1,7 +1,6 @@
 #ifndef LIBRARY_H
 #define LIBRARY_H
 
-#include <string>
 #include <vector>
 #include "Book.h"
 #include "User.h"
@@ -12,14 +11,12 @@ private:
     std::vector<User> users;
 
 public:
-    bool addBook(const Book& book);
-    bool registerUser(const User& user);
-    bool borrowBook(const std::string& userName, const std::string& isbn);
-    bool returnBook(const std::string& userName, const std::string& isbn);
-
-private:
+    void addBook(const Book& book);
+    void addUser(const User& user);
     Book* findBookByIsbn(const std::string& isbn);
-    User* findUserByName(const std::string& name);
+    User* findUserById(const std::string& userId);
+    bool borrowBook(const std::string& isbn, const std::string& userId);
+    bool returnBook(const std::string& isbn, const std::string& userId);
 };
 
-#endif // LIBRARY_H
+#endif

@@ -1,22 +1,23 @@
 #ifndef USER_H
 #define USER_H
 
+#include <string>
 #include <vector>
 #include "Book.h"
 
 class User {
 private:
-    std::string nome;
+    std::string name;
+    std::string id;
     std::vector<Book> borrowedBooks;
 
 public:
-    User(const std::string& n) : nome(n) {}
-
-    void emprestaLivroParaUsuario(Book& book);
+    User(const std::string& name, const std::string& id);
+    std::string getName() const;
+    std::string getId() const;
+    void borrowBook(Book& book);
     void returnBook(Book& book);
-    bool hasBorrowedBook(const Book& book) const;
-
-    std::string getNome() const { return nome; }
+    std::vector<Book> getBorrowedBooks() const;
 };
 
-#endif // USER_H
+#endif

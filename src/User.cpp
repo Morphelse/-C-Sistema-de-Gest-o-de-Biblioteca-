@@ -1,28 +1,28 @@
 #include "User.h"
-#include <algorithm>
-#include <iostream>
+#include <algorithm> // Inclua este cabeçalho para std::find_if
 
-void User::emprestaLivroParaUsuario(Book& book) {
-    if (book.isDisponivel()) {
+User::User(const std::string& name, const std::string& id)
+    : name(name), id(id) {}
+
+std::string User::getName() const { return name; }
+std::string User::getId() const { return id; }
+
+void User::borrowBook(Book& book) {
+    if (book.getAvailability()) {
         borrowedBooks.push_back(book);
-        book.emprestar();
-        std::cout << "Empréstimo realizado com sucesso!" << std::endl;
-    } else {
-        std::cerr << "Falha no empréstimo do livro '" << book.getTitulo() << "'." << std::endl;
+        book.borrowBook();
     }
 }
 
 void User::returnBook(Book& book) {
-    auto it = std::find(borrowedBooks.begin(), borrowedBooks.end(), book);
+    // Remove o livro da lista de livros emprestados
+    auto it = std::find_if(borrowedBooks.begin(), borrowedBooks.end(),
+        [&book](const Book& b) { return b.getIsbn() == book.getIsbn(); });
+
     if (it != borrowedBooks.end()) {
         borrowedBooks.erase(it);
-        book.devolver();
-        std::cout << "Devolução realizada com sucesso!" << std::endl;
-    } else {
-        std::cerr << "Falha na devolução do livro '" << book.getTitulo() << "'." << std::endl;
+        book.returnBook();
     }
 }
 
-bool User::hasBorrowedBook(const Book& book) const {
-    return std::find(borrowedBooks.begin(), borrowedBooks.end(), book) != borrowedBooks.end();
-}
+std::vector<Book> User::getBorrowedBooks() const { return borrowedBooks; }
