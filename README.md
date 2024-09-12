@@ -1,4 +1,3 @@
-Aqui está um exemplo de README para o seu projeto de Sistema de Gestão de Biblioteca. Este README inclui uma descrição do projeto, instruções de compilação e uso, e informações sobre a estrutura do projeto.
 
 ```markdown
 # Sistema de Gestão de Biblioteca
