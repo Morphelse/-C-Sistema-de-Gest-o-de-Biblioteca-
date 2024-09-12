@@ -1,16 +1,14 @@
 #include "User.h"
-#include <algorithm>  // Inclua este cabeçalho para std::find
+#include <algorithm>
+#include <iostream>
 
-User::User(const std::string& id, const std::string& name)
-    : id(id), name(name) {}
-
-std::string User::getId() const { return id; }
-std::string User::getName() const { return name; }
-
-void User::borrowBook(Book& book) {
-    if (book.isAvailable()) {
+void User::emprestaLivroParaUsuario(Book& book) {
+    if (book.isDisponivel()) {
         borrowedBooks.push_back(book);
-        book.borrow();
+        book.emprestar();
+        std::cout << "Empréstimo realizado com sucesso!" << std::endl;
+    } else {
+        std::cerr << "Falha no empréstimo do livro '" << book.getTitulo() << "'." << std::endl;
     }
 }
 
@@ -18,7 +16,10 @@ void User::returnBook(Book& book) {
     auto it = std::find(borrowedBooks.begin(), borrowedBooks.end(), book);
     if (it != borrowedBooks.end()) {
         borrowedBooks.erase(it);
-        book.returnBook();
+        book.devolver();
+        std::cout << "Devolução realizada com sucesso!" << std::endl;
+    } else {
+        std::cerr << "Falha na devolução do livro '" << book.getTitulo() << "'." << std::endl;
     }
 }
 

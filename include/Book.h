@@ -2,26 +2,28 @@
 #define BOOK_H
 
 #include <string>
+#include <iostream> // Adicione esta linha para std::cerr e std::endl
 
 class Book {
 private:
-    std::string title;
-    std::string author;
+    std::string titulo;
+    std::string autor;
     std::string ISBN;
-    bool available;
+    bool disponivel;
 
 public:
-    Book(std::string title, std::string author, std::string ISBN);
+    Book(const std::string& t, const std::string& a, const std::string& isbn)
+        : titulo(t), autor(a), ISBN(isbn), disponivel(true) {}
 
-    std::string getTitle() const;
-    std::string getAuthor() const;
-    std::string getISBN() const;
-    bool isAvailable() const;
+    std::string getTitulo() const { return titulo; }
+    std::string getAutor() const { return autor; }
+    std::string getISBN() const { return ISBN; }
+    bool isDisponivel() const { return disponivel; }
 
-    void borrow();  // Marks the book as borrowed
-    void returnBook();  // Marks the book as available again
+    void emprestar();
+    void devolver();
 
-    bool operator==(const Book& other) const;  // Comparison operator
+    bool operator==(const Book& other) const;
 };
 
-#endif
+#endif // BOOK_H

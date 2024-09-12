@@ -1,50 +1,53 @@
 #include "Library.h"
+#include <algorithm>
+#include <iostream>
 
-void Library::addBook(const Book& book) {
+bool Library::addBook(const Book& book) {
     books.push_back(book);
+    return true;
 }
 
-void Library::addUser(const User& user) {
+bool Library::registerUser(const User& user) {
     users.push_back(user);
+    return true;
 }
 
 Book* Library::findBookByIsbn(const std::string& isbn) {
-    for (auto& book : books) {
-        if (book.getISBN() == isbn) {
-            return &book;
-        }
-    }
-    return nullptr;
+    auto it = std::find_if(books.begin(), books.end(), [&isbn](Book& book) {
+        return book.getISBN() == isbn;
+    });
+    return it != books.end() ? &(*it) : nullptr;
 }
 
-User* Library::findUserById(const std::string& userId) {
-    for (auto& user : users) {
-        if (user.getId() == userId) {
-            return &user;
-        }
-    }
-    return nullptr;
+User* Library::findUserByName(const std::string& name) {
+    auto it = std::find_if(users.begin(), users.end(), [&name](User& user) {
+        return user.getNome() == name;
+    });
+    return it != users.end() ? &(*it) : nullptr;
 }
 
-bool Library::borrowBook(const std::string& isbn, const std::string& userId) {
+bool Library::borrowBook(const std::string& userName, const std::string& isbn) {
     Book* book = findBookByIsbn(isbn);
-    User* user = findUserById(userId);
+    User* user = findUserByName(userName);
 
-    if (book && user && book->isAvailable()) {
-        user->borrowBook(*book);
+    if (book && user && book->isDisponivel()) {
+        user->emprestaLivroParaUsuario(*book);
         return true;
+    } else {
+        std::cerr << "Falha no empréstimo do livro '" << isbn << "'." << std::endl;
+        return false;
     }
-    return false;
 }
 
-bool Library::returnBook(const std::string& isbn, const std::string& userId) {
+bool Library::returnBook(const std::string& userName, const std::string& isbn) {
     Book* book = findBookByIsbn(isbn);
-    User* user = findUserById(userId);
+    User* user = findUserByName(userName);
 
-    if (book && user) {
+    if (book && user && user->hasBorrowedBook(*book)) {
         user->returnBook(*book);
-        book->returnBook();
         return true;
+    } else {
+        std::cerr << "Falha na devolução do livro '" << isbn << "'." << std::endl;
+        return false;
     }
-    return false;
 }
