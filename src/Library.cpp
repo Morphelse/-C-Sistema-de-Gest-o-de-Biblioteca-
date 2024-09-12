@@ -10,7 +10,7 @@ void Library::addUser(const User& user) {
 
 Book* Library::findBookByIsbn(const std::string& isbn) {
     for (auto& book : books) {
-        if (book.getIsbn() == isbn) {
+        if (book.getISBN() == isbn) {
             return &book;
         }
     }
@@ -30,7 +30,7 @@ bool Library::borrowBook(const std::string& isbn, const std::string& userId) {
     Book* book = findBookByIsbn(isbn);
     User* user = findUserById(userId);
 
-    if (book && user && book->getAvailability()) {
+    if (book && user && book->isAvailable()) {
         user->borrowBook(*book);
         return true;
     }

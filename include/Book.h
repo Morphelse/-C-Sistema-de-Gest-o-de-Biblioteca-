@@ -7,22 +7,21 @@ class Book {
 private:
     std::string title;
     std::string author;
-    std::string isbn;
-    bool isAvailable;
+    std::string ISBN;
+    bool available;
 
 public:
-    // Construtor
-    Book(std::string title, std::string author, std::string isbn);
+    Book(std::string title, std::string author, std::string ISBN);
 
-    // Métodos getters
     std::string getTitle() const;
     std::string getAuthor() const;
-    std::string getIsbn() const;
-    bool getAvailability() const;
+    std::string getISBN() const;
+    bool isAvailable() const;
 
-    // Métodos para emprestar e devolver o livro
-    void borrowBook();
-    void returnBook();
+    void borrow();  // Marks the book as borrowed
+    void returnBook();  // Marks the book as available again
+
+    bool operator==(const Book& other) const;  // Comparison operator
 };
 
 #endif

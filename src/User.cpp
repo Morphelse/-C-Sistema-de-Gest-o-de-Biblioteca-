@@ -1,16 +1,16 @@
 #include "User.h"
-#include "Book.h"
-#include <algorithm>  // Para std::find
+#include <algorithm>  // Inclua este cabeçalho para std::find
 
-User::User(std::string name, std::string id) : name(name), id(id) {}
+User::User(const std::string& id, const std::string& name)
+    : id(id), name(name) {}
 
-std::string User::getName() const { return name; }
 std::string User::getId() const { return id; }
+std::string User::getName() const { return name; }
 
 void User::borrowBook(Book& book) {
-    if (book.getAvailability()) {
+    if (book.isAvailable()) {
         borrowedBooks.push_back(book);
-        book.borrowBook();
+        book.borrow();
     }
 }
 
@@ -22,4 +22,6 @@ void User::returnBook(Book& book) {
     }
 }
 
-std::vector<Book> User::getBorrowedBooks() const { return borrowedBooks; }
+bool User::hasBorrowedBook(const Book& book) const {
+    return std::find(borrowedBooks.begin(), borrowedBooks.end(), book) != borrowedBooks.end();
+}
